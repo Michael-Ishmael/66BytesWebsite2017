@@ -1,11 +1,29 @@
 {
-  "name": "y",
+  "name": "66BytesWebsite",
   "version": "1.0.0",
   "description": "66 Bytes Main Website",
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/funhead/66BytesWebsite2017.git"
+  },
   "author": "Michael Ishmael",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@types/gsap": "^1.19.1",
+    "@types/jquery": "^3.2.1",
+    "gsap": "^1.19.1",
+    "jquery": "^3.2.1",
+    "scrollmagic": "^2.0.5"
+  },
+  "devDependencies": {
+    "css-loader": "^0.28.4",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.18.2",
+    "webpack": "^2.6.1",
+    "webpack-dev-server": "^2.4.5"
+  }
 }
