@@ -31,9 +31,14 @@ $("#little-cog").hover(
 
 var controller = new ScrollMagic.Controller();
 var scene1 = new ScrollMagic.Scene({
-  triggerElement: "#trigger1"
-});
-scene1.setTween(TweenMax.to('body', 1, {backgroundColor:"#9cb1b6", ease:Power3.easeOut}));
+  triggerElement: "#trigger1",
+    duration: $(window).height() + 100,
+    triggerHook: 0,
+    reverse: true
+})
+    .setPin("#expertise-content")
+;
+//scene1.setTween(TweenMax.to('body', 1, {backgroundColor:"#9cb1b6", ease:Power3.easeOut}));
 var scene2 = new ScrollMagic.Scene({
   triggerElement: "#trigger2"
 });
