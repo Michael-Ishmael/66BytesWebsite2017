@@ -40,9 +40,12 @@ var scene1 = new ScrollMagic.Scene({
 ;
 //scene1.setTween(TweenMax.to('body', 1, {backgroundColor:"#9cb1b6", ease:Power3.easeOut}));
 var scene2 = new ScrollMagic.Scene({
-  triggerElement: "#trigger2"
+  triggerElement: "#trigger2",
+    duration: $(window).height() + 100,
+    triggerHook: 0,
+    reverse: true
 });
-scene2.setTween(TweenMax.to('body', 1, {backgroundColor:"#3d4547", ease:Power3.easeOut}));
+//scene2.setTween(TweenMax.to('body', 1, {backgroundColor:"#3d4547", ease:Power3.easeOut}));
 
 
 controller.addScene(scene1);
