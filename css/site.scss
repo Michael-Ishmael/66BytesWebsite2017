@@ -13,6 +13,35 @@ html, body {
 
 }
 
+a {
+  color: inherit;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  &:visited {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  &[href='*'] {
+    &:hover {
+      text-decoration: underline;
+      color: inherit;
+    }
+
+    &:visited {
+      color: inherit;
+      text-decoration: none;
+    }
+
+  }
+
+}
+
 h2 {
   font-family: "Helvetica Neue", sans-serif;
   font-size: 1.2rem;
@@ -28,7 +57,6 @@ body {
   background-color: $primaryBg;
 
   section {
-
 
     .hero {
       margin: 50px auto;
@@ -57,14 +85,12 @@ body {
       margin-bottom: 100px
     }
 
-
     &.expertise {
       h2 {
         color: $primaryText;
       }
 
     }
-
 
     article {
 
@@ -155,4 +181,37 @@ svg .cog-yellow {
 
 .expertise {
   //background-color: lightblue;
+}
+
+header {
+  padding: 10px;
+
+  nav {
+    margin-left: 120px;
+    text-align: right;
+
+    ul {
+      display: inline-block;
+      padding: 0;
+
+      li {
+        display: inline-block;
+        list-style: none;
+        float: left;
+        padding: 4px 10px;
+        color: #fff;
+      }
+    }
+  }
+}
+
+.logo {
+  float: left;
+  width: 120px;
+  height: 30px;
+  display: inline-block;
+  background: url("../img/logo.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+
 }

@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="stylesheet" type="text/css" href="css/site.scss"/>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>66 Bytes</title>
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="css/bootstrap.css">
@@ -11,10 +13,35 @@
 </head>
 <body>
 
+<header>
+  <div class="logo">
+
+  </div>
+  <nav>
+    <ul>
+      <li>
+        <a href="#expertise">Expertise</a>
+      </li>
+      <li>
+        <a href="#about"> About
+        </a></li>
+      <li>
+        <a href="#clients"> Clients
+        </a></li>
+      <li>
+        <a href="#contact"> Contact
+        </a></li>
+    </ul>
+  </nav>
+</header>
+
 <section class="home">
 
-  <div class="hero">
-    <h1>software, spoken in your language</h1>
+
+  <div class="hero container">
+    <h1 class="hidden-xs-down hidden-sm">software, spoken in your language</h1>
+    <h1 class="hidden-md-up hidden-lg-up">software</h1>
+    <h3 class="hidden-md-up hidden-lg-up">spoken in your language</h3>
 
     <div class="centered-container">
 
@@ -51,18 +78,20 @@
 
 <section class="expertise">
 
-  <h1 id="trigger1">Expertise</h1>
+  <h1 id="trigger1">
+    <a name="expertise"> Expertise
+    </a></h1>
 
   <div class="container-fluid">
 
     <article class="row">
-      
+
       <div class="exp-cell col-md-6 col-sm-6 col-lg-4 col-xs-12">
         <div class="exp-icon"></div>
         <div class="article-content">
           <h2>Consultancy</h2>
           <p>66 Bytes can share the benefits of over twenty years experience in software development
-            and delivery.  Whether it's help with the architecture of an enterprise application,
+            and delivery. Whether it's help with the architecture of an enterprise application,
             or design of a small bespoke system, our honest and open advice will help you deliver
             your project in budget and on time.
           </p>
@@ -76,10 +105,9 @@
         <div class="article-content">
           <h2>Websites</h2>
           <p>
-            We work on a range of web solutions, from simple static websites to multi-function web
-            applications. Our dd UI/UX knowledge, combined with our full-stack development capabilities
-            will meet your front-end requirements, guaranteed to be delivered in clean, clear and
-            user-friendly interface.
+            We work on a range of web solutions, from simple static websites to multi-function portal
+            applications. We have the complete tool-set of web-development skills to meet your site
+            requirements and guarantee to always deliver a clean, clear and user-friendly interface.
           </p>
           <p>
             All of our websites implement the latest responsive design techniques so they look great
@@ -103,14 +131,14 @@
       <div class="exp-cell col-md-6 col-sm-6 col-lg-4 col-xs-12">
         <div class="exp-icon"></div>
         <div class="article-content">
-        <h2>Search and Text-Mining</h2>
-        <p>We can provide your products with lightning fast search capabilities over vast
-           collections of documents, websites or any other free-text sources that are important to
-          your offering.
-        </p>
+          <h2>Search and Text-Mining</h2>
+          <p>We can provide your products with lightning fast search capabilities over vast
+            collections of documents, websites or any other free-text sources that are important to
+            your offering.
+          </p>
           <p>
-            If you need to interrogate your unstructured data we can offer a range of text-mining and AI solutions
-            to derive insight and intelligence that may otherwise lie hidden in the numbers.
+            If you need to interrogate your unstructured data we can offer a range of text-mining and AI
+            solutions to derive insight and intelligence that may otherwise lie hidden in the numbers.
           </p>
         </div>
       </div>
@@ -119,14 +147,13 @@
       <div class="exp-cell col-md-6 col-sm-6 col-lg-4 col-xs-12">
         <div class="exp-icon"></div>
         <div class="article-content">
-        <h2>API Development</h2>
-        <p>
-          APIs are the future and if you're interested in delivering your data as a modular, pluggable service
-          we can help make this a reality.  We have years of experience  designing and developing APIs from the early days
-          of SOAP web services
-          to modern REST APIs,
-          dd a key understanding of what makes an API useful and how to provide a versatile dd service.
-        </p>
+          <h2>API Development</h2>
+          <p>
+            APIs are the future and if you're interested in delivering your data as a modular, pluggable service
+            we can help make this a reality. We have years of experience designing and developing APIs and
+            key understanding of what makes an API useful and how best to design a versatile, multi-purpose
+            offering.
+          </p>
         </div>
       </div>
 
@@ -137,7 +164,7 @@
           <h2>Cloud Solutions</h2>
           <p>
             With cloud-hosting becoming so cheap and flexible, very few of our clients are hosting their
-            own data anymore.  We dd all of our services in the cloud and dd to a cost-effective package
+            own data anymore. We dd all of our services in the cloud and dd to a cost-effective package
             that meets your usage needs.
           </p>
         </div>
@@ -151,31 +178,46 @@
 </section>
 
 <section class="about">
-  <h1 id="trigger2">About</h1>
+  <h1 id="trigger2">
+    <a name="about"> About
+    </a></h1>
 
   <article>
 
     <p>
-      66 Bytes is a consultancy company run by Michael Ishmael - a multi-discipline IT
-      professional with over twenty years experience in the software development, delivery
-      and support.
+      66 Bytes is a small, self-contained software company with a mission to offer, rapid,
+      targeted solutions to clients of all sizes. We take on projects with clear,
+      achievable goals and aim to deliver results within a small time-frame. It is our
+      belief that software solutions, whilst often sophisticated, should never be complicated.
+      We have found that any challenge can be broken into small deliverable parts that start to
+      offer value before any unpredicted expense.
     </p>
 
     <p>
-      Our consultancy services offer honest and uncomplicated advice to businesses dd
-      by a technological
-
-      , develop small systems, troubleshoot legacy apps, integrate existing systems
-      with new ones
+      Our team is composed of mature, multi-discipline developers whose collective experience
+      covers hundreds of projects in a .. companies and industries. Consequently, we are able
+      to offer a range of blended technical services. Whether consultancy or green-field development,
+      troubleshoot legacy applications or integrate existing systems with new ones, we
+      can deliver a solution ..ly, always with open and honest communication that never
+      obscures itself in the complexities of a implementation.
     </p>
+
 
   </article>
 
 </section>
 
 <section class="clients">
+  <h1 id="trigger3">
+    <a name="clients"> Clients
+    </a></h1>
 
+</section>
 
+<section class="contact">
+  <h1 id="trigger4">
+    <a name="contact"> Contact
+    </a></h1>
 
 </section>
 
