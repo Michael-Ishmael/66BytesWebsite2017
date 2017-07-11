@@ -34,11 +34,30 @@ body {
   body section {
     min-height: 600px;
     width: 100%;
-    height: 100%;
     overflow: hidden;
     position: relative;
     padding: 50px;
     color: #fff; }
+    body section#home {
+      background-color: #3d4547; }
+    body section#expertise {
+      background-color: #313839; }
+    body section#about {
+      background-color: #495255; }
+    body section#clients {
+      background-color: #313839; }
+    body section#contact {
+      background-color: #495255; }
+    body section#home h1 {
+      background-color: #3d4547; }
+    body section#expertise h1 {
+      background-color: #313839; }
+    body section#about h1 {
+      background-color: #495255; }
+    body section#clients h1 {
+      background-color: #313839; }
+    body section#contact h1 {
+      background-color: #495255; }
     body section .hero {
       margin: 50px auto;
       display: block;
@@ -50,10 +69,12 @@ body {
       color: #c7202a;
       font-weight: 200;
       font-size: 3.5rem;
-      margin-bottom: 100px; }
+      margin-bottom: 100px;
+      z-index: 1000; }
     body section.expertise h2 {
       color: #c7202a; }
     body section article {
+      overflow-y: auto;
       margin: 0 50px;
       columns: 2; }
       body section article .exp-cell {
@@ -104,7 +125,22 @@ svg .cog-yellow {
   top: 30%; }
 
 header {
+  position: fixed;
+  z-index: 10000;
+  background-color: #3d4547;
+  width: 100%;
+  line-height: 10px;
   padding: 10px; }
+  header.home-active {
+    background-color: #3d4547; }
+  header.expertise-active {
+    background-color: #313839; }
+  header.about-active {
+    background-color: #495255; }
+  header.clients-active {
+    background-color: #313839; }
+  header.contact-active {
+    background-color: #495255; }
   header nav {
     margin-left: 120px;
     text-align: right; }

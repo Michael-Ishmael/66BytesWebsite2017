@@ -58,6 +58,18 @@ body {
 
   section {
 
+    &#home { background-color: $primaryBg; }
+    &#expertise { background-color: darken($primaryBg, 5%); }
+    &#about { background-color: lighten($primaryBg, 5%); }
+    &#clients { background-color:  darken($primaryBg, 5%); }
+    &#contact { background-color:  lighten($primaryBg, 5%); }
+
+    &#home h1 { background-color: $primaryBg; }
+    &#expertise h1 { background-color: darken($primaryBg, 5%); }
+    &#about h1 { background-color: lighten($primaryBg, 5%); }
+    &#clients h1 { background-color:  darken($primaryBg, 5%); }
+    &#contact h1  { background-color:  lighten($primaryBg, 5%); }
+
     .hero {
       margin: 50px auto;
       display: block;
@@ -71,7 +83,7 @@ body {
 
     min-height: 600px;
     width: 100%;
-    height: 100%;
+    //height: 100%;
     overflow: hidden;
     position: relative;
     padding: 50px;
@@ -82,7 +94,8 @@ body {
       color: $primaryText;
       font-weight: 200;
       font-size: 3.5rem;
-      margin-bottom: 100px
+      margin-bottom: 100px;
+      z-index: 1000;
     }
 
     &.expertise {
@@ -93,6 +106,8 @@ body {
     }
 
     article {
+
+      overflow-y: auto;
 
       margin: 0 50px;
 
@@ -184,6 +199,20 @@ svg .cog-yellow {
 }
 
 header {
+
+  &.home-active { background-color: $primaryBg; }
+  &.expertise-active { background-color: darken($primaryBg, 5%); }
+  &.about-active { background-color: lighten($primaryBg, 5%); }
+  &.clients-active { background-color:  darken($primaryBg, 5%); }
+  &.contact-active { background-color:  lighten($primaryBg, 5%); }
+
+
+  position: fixed;
+  z-index: 10000;
+  background-color: $primaryBg;
+  width: 100%;
+  line-height: 10px;
+
   padding: 10px;
 
   nav {
