@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="stylesheet" type="text/css" href="css/site.scss"/>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>66 Bytes</title>
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="css/bootstrap.css">
@@ -11,10 +13,35 @@
 </head>
 <body>
 
-<section class="home">
+<header>
+  <a href="#home" class="logo">
 
-  <div class="hero">
-    <h1>software, spoken in your language</h1>
+  </a>
+  <nav>
+    <ul>
+      <li>
+        <a href="#expertise">Expertise</a>
+      </li>
+      <li>
+        <a href="#about"> About
+        </a></li>
+      <li>
+        <a href="#clients"> Clients
+        </a></li>
+      <li>
+        <a href="#contact"> Contact
+        </a></li>
+    </ul>
+  </nav>
+</header>
+
+<section id="home" class="home">
+
+
+  <div class="hero container">
+    <h1 class="hidden-xs-down hidden-sm">software, spoken in your language</h1>
+    <h1 class="hidden-md-up hidden-lg-up">software</h1>
+    <h3 class="hidden-md-up hidden-lg-up">spoken in your language</h3>
 
     <div class="centered-container">
 
@@ -49,12 +76,16 @@
   </div>
 </section>
 
-<section id="trigger1" class="expertise">
+<section id="expertise" class="expertise">
 
-  <div id="expertise-content" class="container-fluid">
-      <h1 >Expertise</h1>
+  <h1 id="trigger1">
+    <a> Expertise
+    </a></h1>
+
+  <div class="container-fluid">
+
     <article class="row">
-      
+
       <div class="exp-cell col-md-6 col-sm-6 col-lg-4 col-xs-12">
         <div class="exp-icon"></div>
         <div class="article-content">
@@ -74,10 +105,9 @@
         <div class="article-content">
           <h2>Websites</h2>
           <p>
-            We work on a range of web solutions, from simple static websites to multi-function web
-            applications. Our proficiency in UI/UX development
-            will meet your front-end requirements, guaranteed to be delivered in clean, clear and
-            user-friendly interface.
+            We work on a range of web solutions, from simple static websites to multi-function portal
+            applications. We have the complete tool-set of web-development skills to meet your site
+            requirements and guarantee to always deliver a clean, clear and user-friendly interface.
           </p>
           <p>
             All of our websites implement the latest responsive design techniques so they look great
@@ -101,14 +131,14 @@
       <div class="exp-cell col-md-6 col-sm-6 col-lg-4 col-xs-12">
         <div class="exp-icon"></div>
         <div class="article-content">
-        <h2>Search and Text-Mining</h2>
-        <p>We can provide your products with lightning fast search capabilities over vast
-           collections of documents, web pages or any other free-text sources that are important to
-          your offering.
-        </p>
+          <h2>Search and Text-Mining</h2>
+          <p>We can provide your products with lightning fast search capabilities over vast
+            collections of documents, websites or any other free-text sources that are important to
+            your offering.
+          </p>
           <p>
-            If you need to interrogate your unstructured data we can offer a range of text-mining and AI solutions
-            to derive insight and intelligence that may otherwise lie hidden in the numbers.
+            If you need to interrogate your unstructured data we can offer a range of text-mining and AI
+            solutions to derive insight and intelligence that may otherwise lie hidden in the numbers.
           </p>
         </div>
       </div>
@@ -117,13 +147,13 @@
       <div class="exp-cell col-md-6 col-sm-6 col-lg-4 col-xs-12">
         <div class="exp-icon"></div>
         <div class="article-content">
-        <h2>API Development</h2>
-        <p>
-          APIs are the future of and if you're interested in delivering your data as a modular, pluggable service
-          we can help make it a reality.  We have years of experience designing and developing APIs, from RESTful
-            Web Services to containerised micro-services. We possess an acute understanding of the key features
-            that make an API useful and how to use these to provide versatile data service.
-        </p>
+          <h2>API Development</h2>
+          <p>
+            APIs are the future and if you're interested in delivering your data as a modular, pluggable service
+            we can help make this a reality. We have years of experience designing and developing APIs and
+            key understanding of what makes an API useful and how best to design a versatile, multi-purpose
+            offering.
+          </p>
         </div>
       </div>
 
@@ -134,8 +164,8 @@
           <h2>Cloud Solutions</h2>
           <p>
             With cloud-hosting becoming so cheap and flexible, very few of our clients are hosting their
-            own data anymore.  We can provide all of our services as cloud-based solutions and advise on the
-              most cost-effective package to meet your usage needs.
+            own data anymore. We dd all of our services in the cloud and dd to a cost-effective package
+            that meets your usage needs.
           </p>
         </div>
       </div>
@@ -150,23 +180,32 @@
 
 </section>
 
-<section class="about">
+<section id="about" class="about">
+  <h1 id="trigger2">
+    <a> About
+    </a></h1>
 
 
-    <div id="about-content" class="container-fluid">
-        <h1 id="trigger2">About</h1>
+    <p>
+      66 Bytes is a small, self-contained software company with a mission to offer, rapid,
+      targeted solutions to clients of all sizes. We take on projects with clear,
+      achievable goals and aim to deliver results within a small time-frame. It is our
+      belief that software solutions, whilst often sophisticated, should never be complicated.
+      We have found that any challenge can be broken into small deliverable parts that start to
+      offer value before any unpredicted expense.
+    </p>
 
-        <article>
+    <p>
+      Our team is composed of mature, multi-discipline developers whose collective experience
+      covers hundreds of projects in a .. companies and industries. Consequently, we are able
+      to offer a range of blended technical services. Whether consultancy or green-field development,
+      troubleshoot legacy applications or integrate existing systems with new ones, we
+      can deliver a solution ..ly, always with open and honest communication that never
+      obscures itself in the complexities of a implementation.
+    </p>
 
-            <p>
-                66 Bytes is a consultancy company run by Michael Ishmael - a multi-discipline IT
-                professional with over twenty years experience in the software development, delivery
-                and support.
-            </p>
 
-            <p>
-                Our consultancy services offer honest and uncomplicated advice to businesses dd
-                by a technological
+  </article>
 
                 , develop small systems, troubleshoot legacy apps, integrate existing systems
                 with new ones
@@ -180,9 +219,17 @@
 
 </section>
 
-<section class="clients">
+<section id="clients" class="clients">
+  <h1 id="trigger3">
+    <a> Clients
+    </a></h1>
 
+</section>
 
+<section id="contact" class="contact">
+  <h1 id="trigger4">
+    <a> Contact
+    </a></h1>
 
 </section>
 
@@ -190,6 +237,7 @@
 <script src="node_modules/gsap/src/minified/TweenMax.min.js"></script>
 <script src="node_modules/scrollmagic/scrollmagic/minified/ScrollMagic.min.js"></script>
 <script src="node_modules/scrollmagic/scrollmagic/minified/plugins/animation.gsap.min.js"></script>
+<script src="node_modules/gsap/src/minified/plugins/ScrollToPlugin.min.js"></script>
 
 <script src="js/main.js"></script>
 </body>
