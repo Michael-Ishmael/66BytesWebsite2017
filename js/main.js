@@ -39,10 +39,10 @@ $("section").each(function() {
   var id = $(this).attr("id");
 
   var scene = new ScrollMagic.Scene({
-    triggerElement: $("#" + id + " h1")[0]
+    triggerElement: this // $("#" + id + " h1")[0]
   });
    if(id !== "home") {
-    scene.setPin("#" + id + " h1");
+    scene.setPin(this);
       scene.setClassToggle("header", id + "-active")
    }
 

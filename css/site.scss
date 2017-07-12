@@ -3,15 +3,23 @@ $secondaryBg: #9cb1b6;
 $primaryText: #c7202a;
 $hightLight: #c4b61b;
 $secondaryHightLight: #b6ced4;
+/* Please do not use this import in production. You could download this font from here https://fontstorage.com/font/quicksand */
+@import "http://fonts.fontstorage.com/import/quicksand.css";
+/*
+	Quicksand, 300, 300 italic, 400, 400 italic, 700, 700 italic
+*/
 
 html, body {
 
   height: 100%;
   margin: 0;
   padding: 0;
-  font-family: "Helvetica Neue", sans-serif;
+  font-family: 'Tienne', serif;
+  font-weight: 700;
 
 }
+
+
 
 a {
   color: inherit;
@@ -43,7 +51,8 @@ a {
 }
 
 h2 {
-  font-family: "Helvetica Neue", sans-serif;
+  font-family: Lato, "Helvetica Neue", sans-serif;
+  font-weight: 300;
   font-size: 1.2rem;
 }
 
@@ -75,24 +84,26 @@ body {
       display: block;
       width: 80%;
       h1 {
+        font-family: Lato, "Helvetica Neue", sans-serif;
+        font-weight: 300;
         text-align: center;
         margin-bottom: 50px;
       }
 
     }
 
-    min-height: 600px;
+    //min-height: 100%;
     width: 100%;
-    //height: 100%;
+    height: 100%;
     overflow: hidden;
     position: relative;
     padding: 50px;
     color: #fff;
 
     h1 {
-
+      font-family: Lato, "Helvetica Neue", sans-serif;
+      font-weight: 300;
       color: $primaryText;
-      font-weight: 200;
       font-size: 3.5rem;
       margin-bottom: 100px;
       z-index: 1000;
@@ -207,8 +218,8 @@ header {
   &.contact-active { background-color:  lighten($primaryBg, 5%); }
 
 
-  //position: fixed;
-  //z-index: 10000;
+  position: fixed;
+  z-index: 10000;
   background-color: $primaryBg;
   width: 100%;
   line-height: 10px;
@@ -222,6 +233,7 @@ header {
     ul {
       display: inline-block;
       padding: 0;
+      margin: 0;
 
       li {
         display: inline-block;
