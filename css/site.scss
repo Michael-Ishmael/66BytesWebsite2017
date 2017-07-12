@@ -207,8 +207,8 @@ header {
   &.contact-active { background-color:  lighten($primaryBg, 5%); }
 
 
-  position: fixed;
-  z-index: 10000;
+  //position: fixed;
+  //z-index: 10000;
   background-color: $primaryBg;
   width: 100%;
   line-height: 10px;
