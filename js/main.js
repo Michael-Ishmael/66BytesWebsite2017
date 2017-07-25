@@ -40,11 +40,15 @@ $("section").each(function() {
 
   var scene = new ScrollMagic.Scene({
     triggerElement: this // $("#" + id + " h1")[0]
+     // , duration: '50%'
   });
    if(id !== "home") {
     scene.setPin(this);
-      scene.setClassToggle("header", id + "-active")
+    scene.setClassToggle("header", id + "-active");
    }
+    if(id === "expertise") {
+        scene.setClassToggle("article", "scroll-article");
+    }
 
    scene.addTo(controller);
 

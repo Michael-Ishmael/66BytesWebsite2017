@@ -165,13 +165,8 @@ header {
         padding: 4px 10px;
         color: #fff; }
 
-.logo {
-  float: left;
-  width: 120px;
-  height: 30px;
-  display: inline-block;
-  background: url("../img/logo.png");
-  background-repeat: no-repeat;
-  background-size: contain; }
+.scroll-article {
+  overflow-y: scroll;
+  height: 200px; }
 
 /*# sourceMappingURL=site.css.map */
