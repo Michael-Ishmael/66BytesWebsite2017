@@ -1,12 +1,17 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "target": "es5",
+    "target": "es6",
     "sourceMap": true,
-    "typeRoots": [
-      "node_modules/@types"
-    ]
+    "moduleResolution": "node",
+    "allowJs": true
+  //  "outDir": "js"
+  //,
+    //"rootDir": "ts"
   },
+  "typeRoots": [
+    "node_modules/@types"
+  ],
   "exclude": [
     "node_modules"
   ]

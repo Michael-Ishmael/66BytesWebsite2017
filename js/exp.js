@@ -27,6 +27,14 @@
 
  */
 
+
+$('.logo').click(function () {
+
+    $('#expertiseCarousel').toggle();
+    $('#expertiseCards').toggle();
+
+});
+
 $('#trigger1').click(function(){
 
     var t1 = new TimelineMax();
@@ -69,8 +77,47 @@ $('#trigger1').click(function(){
 
 });
 
+var cardAnim = new CardAnimator();
+cardAnim.init();
 
+
+
+/*
 $('.exp-tile').click(function(){
+
+    var clicked = $(this);
+    var el = clicked.find(".exp-tile");
+    if(el.length === 0){
+        el = clicked.closest(".exp-tile");
+    }
+
+
+    var dups = [];
+
+    $('.exp-tile').each(function(i){
+        var el = $(this);
+        var off = el.offset();
+        var dup = el.clone();
+        dups.push(dup);
+        dup.css({position:'absolute', left: off.left-5, top: off.top -5, width: el.width(), height: el.height()});
+        $('body').append(dup);
+    });
+
+    var x1=0, y1=0, x2=0, y2=0;
+    for (var i = 0; i < dups.length; i++) {
+        var dup = dups[i];
+        if(dup.left() < x1 || x1 === 0) x1 = dup.left();
+        if(dup.top() < x1 || y1 === 0) y1 = dup.top();
+        if(dup.left() + dup.width() > x2 || x1 === 0) x2 = dup.left() + dup.width();
+        if(dup.top() + dup.height() > y2 || x1 === 0) y2 = dup.top() + dup.height();
+        
+        TweenMax.to(dup, 3, {backgroundColor:'red'});
+    }
+
+
+
+
+/*
 
     for (var i = 0; i < 6; i++) {
 
@@ -88,4 +135,7 @@ $('.exp-tile').click(function(){
 
     }
 
-});
+
+})
+
+*/

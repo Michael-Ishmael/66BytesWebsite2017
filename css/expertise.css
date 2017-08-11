@@ -1,106 +1,73 @@
-$primaryBg: #3d4547;
-$secondaryBg: #9cb1b6;
-$primaryText: #c7202a;
-$highLight: #c4b61b;
-$secondaryHighLight: #b6ced4;
-
 html, body {
-
   height: 100%;
   margin: 0;
   padding: 0;
   font-family: 'Tienne', serif;
   font-weight: 700;
   font-size: 20px;
-  background-color: $primaryBg;
-  color: #fff;
-
-}
+  background-color: #3d4547;
+  color: #fff; }
 
 .cls-1 {
-  fill: $highLight;
-  fill-rule: evenodd;
-}
-
+  fill: #c4b61b;
+  fill-rule: evenodd; }
 
 .cls-2 {
-  fill: $primaryText;
-  fill-rule: evenodd;
-}
+  fill: #c7202a;
+  fill-rule: evenodd; }
 
 @media (max-width: 1024px) {
-  body { font-size: 16px; }
-}
+  body {
+    font-size: 16px; } }
 @media (max-width: 500px) {
-  body { font-size: 12px; }
-}
-
-
+  body {
+    font-size: 12px; } }
 a {
   color: inherit;
-  text-decoration: none;
-
-  &:hover {
+  text-decoration: none; }
+  a:hover {
     text-decoration: none;
+    color: inherit; }
+  a:visited {
     color: inherit;
-  }
-
-  &:visited {
+    text-decoration: none; }
+  a[href='*']:hover {
+    text-decoration: underline;
+    color: inherit; }
+  a[href='*']:visited {
     color: inherit;
-    text-decoration: none;
-  }
-
-  &[href='*'] {
-    &:hover {
-      text-decoration: underline;
-      color: inherit;
-    }
-
-    &:visited {
-      color: inherit;
-      text-decoration: none;
-    }
-
-  }
-
-}
+    text-decoration: none; }
 
 header {
-
-  &.home-active { background-color: $primaryBg; }
-  &.expertise-active { background-color: darken($primaryBg, 5%); }
-  &.about-active { background-color: lighten($primaryBg, 5%); }
-  &.clients-active { background-color:  darken($primaryBg, 5%); }
-  &.contact-active { background-color:  lighten($primaryBg, 5%); }
-
-
   position: fixed;
   z-index: 100;
-  background-color: $primaryBg;
+  background-color: #3d4547;
   width: 100%;
   line-height: 1em;
-
-  padding: .6em .6em .4em .6em;
-
-  nav {
+  padding: .6em .6em .4em .6em; }
+  header.home-active {
+    background-color: #3d4547; }
+  header.expertise-active {
+    background-color: #313839; }
+  header.about-active {
+    background-color: #495255; }
+  header.clients-active {
+    background-color: #313839; }
+  header.contact-active {
+    background-color: #495255; }
+  header nav {
     margin-left: 6.3em;
-    text-align: right;
-
-    ul {
+    text-align: right; }
+    header nav ul {
       display: inline-block;
       padding: 0;
-      margin: 0;
-
-      li {
+      margin: 0; }
+      header nav ul li {
         display: inline-block;
         list-style: none;
         float: left;
         padding: 4px 10px;
-        color: #fff;
-      }
-    }
-  }
-}
+        color: #fff; }
 
 .logo {
   margin-left: .3em;
@@ -110,71 +77,53 @@ header {
   display: inline-block;
   background: url("../src/img/logo.png");
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: contain; }
 
-}
-
-#expertiseCarousel{
- display: none;
-}
-
-#expertiseCards{
-  // display: none;
-}
+#expertiseCarousel {
+  display: none; }
 
 #expertiseCards {
-  font-size: 0;
-}
+  font-size: 0; }
 
 .exp-tile {
   font-size: 1rem;
   cursor: pointer;
-  background-color: $primaryBg;
+  background-color: #3d4547;
   margin: 5px;
   height: 200px;
   position: relative;
   width: 32%;
-  display: inline-block;
-  h2 {
+  display: inline-block; }
+  .exp-tile h2 {
     position: relative;
     top: 50%;
-    //transform: translateY(10%);
     text-align: center;
     font-size: 1.6em;
-    padding: 10px;
-  }
-}
+    padding: 10px; }
 
 h1 {
   font-size: 3em;
   font-family: Lato, "Helvetica Neue", sans-serif;
   font-weight: 200;
-  color: $primaryText;
+  color: #c7202a;
   text-transform: uppercase;
-  background-color: lighten($primaryBg, 5%);
+  background-color: #495255;
   padding: .2em .3em .3em .3em;
   margin-left: -15px;
   margin-right: -15px;
   margin-bottom: 1.2em;
   border-top: 4px solid #868484;
   border-bottom-left-radius: .3em;
-  border-bottom-right-radius: .3em;
-
-  a {
-    display: inline-block;
-
-  }
-}
+  border-bottom-right-radius: .3em; }
+  h1 a {
+    display: inline-block; }
 
 h2 {
-  //text-transform: lowercase;
-  //text-align: center;
   font-size: 2.4em;
   font-family: Lato, "Helvetica Neue", sans-serif;
   font-weight: 300;
-  color: $highLight;
-  margin-bottom: .6em;
-}
+  color: #c4b61b;
+  margin-bottom: .6em; }
 
 .exp-icon {
   width: 2.2em;
@@ -182,19 +131,14 @@ h2 {
   left: 50%;
   top: 50%;
   transform: translateX(-50%) translateY(-110%);
-
   position: absolute;
-  // background: url("../img/cog.png");
   background-size: contain;
   background-repeat: no-repeat;
-
-
   /*    &.consultancy {
         background: url("../img/consulting.svg");
         background-size: contain;
         background-repeat: no-repeat;
       }*/
-
   /*    &.websites {
         background: url("../img/website.svg");
         background-size: contain;
@@ -223,61 +167,34 @@ h2 {
         background: url("../img/cloud.svg");
         background-size: contain;
         background-repeat: no-repeat;
-      }*/
-}
+      }*/ }
 
 section {
-
-  &#expertise { background-color: darken($primaryBg, 5%); }
-  //&#expertise h1 { background-color: darken($primaryBg, 5%); }
-
   height: 100%;
   padding-top: 2.6em;
-
-  font-size: 1em;
-
-
-
-
-  article {
+  font-size: 1em; }
+  section#expertise {
+    background-color: #313839; }
+  section article {
     margin: 0 auto;
     width: 30em;
     height: 24em;
-    position: relative;
-
-    .exp-icon {
+    position: relative; }
+    section article .exp-icon {
       left: -3em;
-      top: .2em;
-
-    }
-
-
-    p {
-      line-height: 1.4em;
-    }
-  }
-
-  .carousel {
+      top: .2em; }
+    section article p {
+      line-height: 1.4em; }
+  section .carousel {
     margin: 1em auto;
-    max-width: 1024px;
-  }
-
-
-  .carousel-control-border {
+    max-width: 1024px; }
+  section .carousel-control-border {
     border-radius: .5em;
     width: 5em;
     height: 5em;
     line-height: 5em;
-    vertical-align: middle;
-  }
+    vertical-align: middle; }
+  section .carousel-control:hover .carousel-control-border {
+    background-color: #3d4547; }
 
-  .carousel-control:hover {
-
-    .carousel-control-border{
-      background-color: $primaryBg;
-    }
-
-
-  }
-
-}
+/*# sourceMappingURL=expertise.css.map */
