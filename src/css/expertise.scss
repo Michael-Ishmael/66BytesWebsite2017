@@ -135,9 +135,18 @@ header {
   position: relative;
   width: 32%;
   display: inline-block;
-  h2 {
+
+  .exp-tile-content {
     position: relative;
     top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    overflow: hidden;
+  }
+
+  h2 {
+    position: relative;
+    //top: 50%;
     //transform: translateY(10%);
     text-align: center;
     font-size: 1.6em;
@@ -180,10 +189,11 @@ h2 {
   width: 2.2em;
   height: 2.2em;
   left: 50%;
-  top: 50%;
-  transform: translateX(-50%) translateY(-110%);
+  //top: 50%;
+  transform: translateX(-50%); //
+  // translateY(-110%);
 
-  position: absolute;
+  position: relative;
   // background: url("../img/cog.png");
   background-size: contain;
   background-repeat: no-repeat;
