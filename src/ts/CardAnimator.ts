@@ -59,20 +59,25 @@ export class CardAnimator {
             let el = $(this);
             let offset = el.offset();
             let dupe = el.clone();
+            let targetwidth=  el.width() + (jQueryMargin * 2);
+            let targetHeight=  el.height() + (jQueryMargin * 2);
             dupe.css({
                 position: 'absolute',
-                left: offset.left - jQueryMargin,
-                top: offset.top - jQueryMargin,
-                width: el.width(),
-                height: el.height(),
-                zIndex: 50
+                left: offset.left,
+                top: offset.top,
+                width: targetwidth,
+                height: targetHeight,
+                zIndex: 50,
+                //background: "blue"
             });
+            dupe.attr("class", "exp-tile");
             $('body').append(dupe);
             const tile = new AnimTile(dupe, that);
             tile.chosenItem = this === item;
             that._dupes.push(tile);
             that._originals.push(el);
             setTimeout(function () {
+                //el.css({background: "red"});
                 el.hide();
             }, 10);
         });
@@ -83,7 +88,7 @@ export class CardAnimator {
         this.setBoxDims();
 
 
-        const margin = 5, targetWidth = 60, targetHeight = 60;
+        const margin = jQueryMargin, targetWidth = 60, targetHeight = 60;
         let center = this._containerDims.center();
         let targY = center.y - (this._boxHeight / 2) - jQueryMargin;
         let totalWidth = (this._dupes.length * (targetWidth + margin)) - margin;
@@ -92,6 +97,7 @@ export class CardAnimator {
         let clickTarget: AnimTile;
 
         this._dupes.forEach(dupe => {
+
             dupe.targetLeft = startLeft + (dupe.positionIndex * (targetWidth + margin));
             dupe.targetTop = targY;
             if (dupe.chosenItem) clickTarget = dupe;
@@ -109,7 +115,7 @@ export class CardAnimator {
         //tl.to(clickTarget.el.find('.exp-tile-content'), .8, {top:"-=20", ease: Elastic.easeOut.config(2, 1)}, "start");
         tl.to(clickTarget.el.find('h2'), .5, {color: "#c7202a"}, "start");
         tl.to(clickTarget.el.find('.cls-1'), .5, {className: "cls-2"}, "start");
-        tl.to($(tileClassName), .3, {backgroundColor: "rgba(61, 69, 71, 0)"}, "-=.2");
+        tl.to($(tileClassName).find(tileClassName + "-background"), .3, {backgroundColor: "rgba(61, 69, 71, 0)"}, "-=.2");
         tl.add("move", "-=0.1");
 
         this._dupes.forEach(dupe => {
