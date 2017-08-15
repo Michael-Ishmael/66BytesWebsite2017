@@ -1,5 +1,5 @@
 import {CardAnimator } from "./ts/CardAnimator"
-
+import "bootstrap"
 
 let anim = new CardAnimator();
 anim.init();

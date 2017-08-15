@@ -1,4 +1,5 @@
 const path = require('path');
+const webPack = require("webpack");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 const ExtraneousFileCleanupPlugin = require('webpack-extraneous-file-cleanup-plugin');
@@ -6,6 +7,16 @@ const ExtraneousFileCleanupPlugin = require('webpack-extraneous-file-cleanup-plu
 let extractPlugin = new ExtractTextWebpackPlugin({
     filename: "[name].[chunkhash].css",
     allChunks: true
+});
+
+let bootstrapProvide = new webPack.ProvidePlugin({
+    $: 'jquery',
+    jQuery: 'jquery',
+    'window.jQuery': 'jquery',
+    Popper: ['popper.js', 'default'],
+    // In case you imported plugins individually, you must also require them here:
+    Util: "exports-loader?Util!bootstrap/js/dist/util",
+    Dropdown: "exports-loader?Dropdown!bootstrap/js/dist/dropdown",
 });
 
 module.exports = {
@@ -76,6 +87,7 @@ module.exports = {
             hash: true
         }),
         extractPlugin,
+        bootstrapProvide
 /*        new ExtraneousFileCleanupPlugin({
             extensions: ['.js'],
             minBytes: 4084
