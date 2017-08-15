@@ -14,7 +14,7 @@ html, body {
   font-size: 20px;
   background-color: $primaryBg;
   color: #fff;
-
+  width: 100%;
 }
 
 .cls-1 {
@@ -82,7 +82,7 @@ header {
 
   padding: .6em .6em .4em .6em;
 
-  nav {
+  nav.wide {
     margin-left: 6.3em;
     text-align: right;
 
@@ -90,7 +90,6 @@ header {
       display: inline-block;
       padding: 0;
       margin: 0;
-
       li {
         display: inline-block;
         list-style: none;
@@ -98,6 +97,22 @@ header {
         padding: 4px 10px;
         color: #fff;
       }
+    }
+  }
+
+  nav.narrow {
+
+    background-color: black;
+
+    ul {
+      padding: 0;
+      margin: 0;
+
+      li {
+        list-style: none;
+        color: #fff;
+      }
+
     }
   }
 }
@@ -280,4 +295,43 @@ section {
 
   }
 
+}
+
+
+.slideout-menu {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 256px;
+  min-height: 100vh;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  z-index: 0;
+  display: none;
+}
+
+.slideout-menu-left {
+  left: 0;
+}
+
+.slideout-menu-right {
+  right: 0;
+}
+
+.slideout-panel {
+  position: relative;
+  z-index: 1;
+  will-change: transform;
+  background-color: #FFF; /* A background-color is required */
+  min-height: 100vh;
+}
+
+.slideout-open,
+.slideout-open body,
+.slideout-open .slideout-panel {
+  overflow: hidden;
+}
+
+.slideout-open .slideout-menu {
+  display: block;
 }

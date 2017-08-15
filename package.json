@@ -23,6 +23,7 @@
     "jquery": "^3.2.1",
     "popper.js": "^1.12.0",
     "scrollmagic": "^2.0.5",
+    "slideout": "^1.0.1",
     "tether": "^1.4.0"
   },
   "devDependencies": {

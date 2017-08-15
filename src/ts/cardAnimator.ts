@@ -71,7 +71,7 @@ export class CardAnimator {
                 //background: "blue"
             });
             dupe.attr("class", "exp-tile");
-            $('body').append(dupe);
+            $("#cardContainer").append(dupe);
             const tile = new AnimTile(dupe, that);
             tile.chosenItem = this === item;
             that._dupes.push(tile);
@@ -132,8 +132,8 @@ export class CardAnimator {
         });
 
         tl.add("drop");
-        tl.to($(tileClassName), .4, {top: "+=170", ease: Back.easeIn.config(1)}, "drop");
-        tl.to($(tileClassName), .6, {top: "+=170", ease: Bounce.easeOut});
+        tl.to($(tileClassName), .4, {top: "+=100", ease: Back.easeIn.config(1)}, "drop");
+        tl.to($(tileClassName), .6, {bottom: "0", ease: Bounce.easeOut});
         tl.add("carousel", "-=0.3");
         tl.to(clickTarget.el.find('.exp-tile-content'), .3, {top: "-=10"});
 

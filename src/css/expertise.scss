@@ -17,6 +17,11 @@ html, body {
 
 }
 
+main {
+  background-color: darken($primaryBg, 5%);
+  height: 100%;
+}
+
 .cls-1 {
   fill: $highLight;
   fill-rule: evenodd;
@@ -32,8 +37,9 @@ html, body {
   body { font-size: 16px; }
 }
 @media (max-width: 500px) {
-  body { font-size: 12px; }
+  body { font-size: 11px; }
 }
+
 
 
 a {
@@ -82,7 +88,11 @@ header {
 
   padding: .6em .6em .4em .6em;
 
-  nav {
+  .container {
+    padding: 0;
+  }
+
+  nav.wide {
     margin-left: 6.3em;
     text-align: right;
 
@@ -100,6 +110,41 @@ header {
       }
     }
   }
+
+
+}
+
+nav.narrow {
+
+  display: none;
+  background-color: black;
+  padding: 20px;
+
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+
+    li {
+      list-style: none;
+      font-size: 1.6em;
+      margin: 5px;
+      color: #fff;
+
+      a {
+        &:hover {
+          color: $highLight;
+        }
+
+        &.selected {
+          color: $highLight;
+        }
+      }
+
+
+    }
+
+  }
 }
 
 .logo {
@@ -114,28 +159,39 @@ header {
 
 }
 
-#expertiseCarousel{
- display: none;
+.card-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
-#expertiseCards{
-  // display: none;
+.card-row {
+  flex: 1;
+}
+
+#expertiseCarousel{
+ display: none;
+  position: absolute;
+  top: 0;
 }
 
 #expertiseCards {
-  font-size: 0;
+  position: absolute;
+  top: 0;
+  margin:  auto;
 }
 
 .exp-tile {
-  font-size: 1rem;
+  font-size: 1em;
   cursor: pointer;
-  height: 200px;
+  //height: 200px;
   padding: 5px;
   //border: 1px solid red;
 
   .exp-tile-background {
     background-color: $primaryBg;
     height: 100%;
+    padding: 20px 0;
     //border: 1px solid blue;
   }
 
@@ -152,7 +208,7 @@ header {
     //top: 50%;
     //transform: translateY(10%);
     text-align: center;
-    font-size: 1.4rem;
+    font-size: 1.4em;
     padding: 10px;
   }
 }
@@ -241,7 +297,10 @@ h2 {
 
 section {
 
-  &#expertise { background-color: darken($primaryBg, 5%); }
+  &#expertise {
+    background-color: darken($primaryBg, 5%);
+
+  }
   //&#expertise h1 { background-color: darken($primaryBg, 5%); }
 
   height: 100%;
@@ -294,3 +353,75 @@ section {
   }
 
 }
+
+
+.slideout-menu {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 200px;
+  min-height: 100vh;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  z-index: 0;
+  display: none;
+  left:auto;
+}
+
+.slideout-menu-left {
+  left: 0;
+}
+
+.slideout-menu-right {
+  right: 0;
+}
+
+.slideout-panel {
+  position: relative;
+  z-index: 1;
+  will-change: transform;
+  background-color: $primaryBg; /* A background-color is required */
+  min-height: 100vh;
+}
+
+.slideout-open,
+.slideout-open body,
+.slideout-open .slideout-panel {
+  overflow: hidden;
+}
+
+.slideout-open .slideout-menu {
+  display: block;
+}
+
+#menuButton {
+  display: inline-block;
+  cursor: pointer;
+
+  .bar1, .bar2, .bar3 {
+    width: 28px;
+    height: 4px;
+    background-color: darken($highLight, 20%);
+    margin: 4px 0;
+    transition: 0.4s;
+  }
+
+  &.change {
+
+    .bar1 {
+      -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+      transform: rotate(-45deg) translate(-5px, 5px);
+    }
+
+    .bar2 {
+      opacity: 0;
+    }
+
+    .bar3 {
+      -webkit-transform: rotate(45deg) translate(-8px, -8px) ;
+      transform: rotate(45deg) translate(-6px, -6px) ;
+    }
+  }
+
+}
+
