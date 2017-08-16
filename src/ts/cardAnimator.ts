@@ -2,6 +2,7 @@ import {Elastic, TweenLite, TimelineLite, Back, Bounce} from "gsap";
 
 const jQueryMargin: number = 5;
 const tileClassName: string = ".exp-tile";
+const tileContainer = "#expertise";
 
 enum ExpertiseViewState {
     Tiles,
@@ -54,24 +55,31 @@ export class CardAnimator {
 
         let that = this;
         let targ: JQuery = null;
+
+
+        let contOffset = $(tileContainer).offset();
+
+
         $(tileClassName).each(function (index) {
 
             let el = $(this);
             let offset = el.offset();
             let dupe = el.clone();
+            let targetLeft = offset.left - contOffset.left;
+            let targetTop = offset.top - contOffset.top;
             let targetwidth=  el.width() + (jQueryMargin * 2);
             let targetHeight=  el.height() + (jQueryMargin * 2);
             dupe.css({
                 position: 'absolute',
-                left: offset.left,
-                top: offset.top,
+                left: targetLeft,
+                top: targetTop,
                 width: targetwidth,
                 height: targetHeight,
                 zIndex: 50,
                 //background: "blue"
             });
             dupe.attr("class", "exp-tile");
-            $("#cardContainer").append(dupe);
+            $(tileContainer).append(dupe);
             const tile = new AnimTile(dupe, that);
             tile.chosenItem = this === item;
             that._dupes.push(tile);
@@ -93,6 +101,17 @@ export class CardAnimator {
         let targY = center.y - (this._boxHeight / 2) - jQueryMargin;
         let totalWidth = (this._dupes.length * (targetWidth + margin)) - margin;
         let startLeft = center.x - (totalWidth / 2);
+
+        let controlBox = $("<div class='carou-controls'></div>");
+        $(tileContainer).append(controlBox);
+        controlBox.css({
+          margin: "auto",
+          position: "absolute",
+          bottom: 0,
+          height: targetHeight,
+          width: targetWidth,
+          backgroundColor: "red"
+        });
 
         let clickTarget: AnimTile;
 
@@ -124,7 +143,8 @@ export class CardAnimator {
                 left: dupe.targetLeft,
                 top: dupe.targetTop,
                 width: targetWidth,
-                height: targetHeight
+                height: targetHeight,
+
             }, "move");
             //tl.to(dupe.el, .6, {backgroundColor: "rgba(61, 69, 71, 0)"}, "move");
             // tl.to(dupe.el.find('.exp-icon'), .5, {yPercent: 80}, "move");
@@ -132,8 +152,18 @@ export class CardAnimator {
         });
 
         tl.add("drop");
-        tl.to($(tileClassName), .4, {top: "+=100", ease: Back.easeIn.config(1)}, "drop");
-        tl.to($(tileClassName), .6, {bottom: "0", ease: Bounce.easeOut});
+        //tl.to($(tileClassName), .4, {top: "+=100", ease: Back.easeIn.config(1)}, "drop");
+      tl.call(function () {
+        that._dupes.forEach(dupe => {
+          let pos = dupe.el.position();
+          let elHeight = dupe.el.height();
+
+          let parentHeight =  dupe.el.parent()[0].offsetHeight;
+          dupe.el.css("bottom", parentHeight - (pos.top + elHeight + (jQueryMargin * 2))); //elHeight)); // dupe.el.height()));
+          dupe.el.css("top", "");
+        });
+      });
+      tl.to($(tileClassName), 1, {bottom: "0", ease: Bounce.easeOut });
         tl.add("carousel", "-=0.3");
         tl.to(clickTarget.el.find('.exp-tile-content'), .3, {top: "-=10"});
 

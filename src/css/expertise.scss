@@ -160,9 +160,8 @@ nav.narrow {
 }
 
 .card-container {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+  position: absolute;
+  bottom: 10px;
 }
 
 .card-row {
@@ -171,13 +170,11 @@ nav.narrow {
 
 #expertiseCarousel{
  display: none;
-  position: absolute;
-  top: 0;
+  position: relative;
 }
 
 #expertiseCards {
-  position: absolute;
-  top: 0;
+  position: relative;
   margin:  auto;
 }
 
