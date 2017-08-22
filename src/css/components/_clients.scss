@@ -1,0 +1,74 @@
+@import "../helpers/variables";
+
+#clients {
+
+  .content-container{
+
+    margin: 0 auto;
+
+    @media (max-width: 600px) {
+      max-width: 80%;
+      margin-top: 2.4rem;
+    }
+  }
+
+  a.client-image {
+
+    display: block;
+    height: 10rem;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    &.acuris {
+      background-image: url('../img/logos/acuris.png')
+    }
+    &.centaur {
+      background-image: url('../img/logos/centaur.png')
+    }
+    &.cision {
+      background-image: url('../img/logos/cision.png')
+    }
+    &.amec {
+      background-image: url('../img/logos/amec.png')
+    }
+    &.lissted {
+      background-image: url('../img/logos/lissted.png')
+    }
+    &.acceso {
+      background-image: url('../img/logos/acceso.png')
+    }
+
+  }
+
+  hr {
+    margin: 0;
+    border-color: $highLight;
+  }
+
+}
+
+#contact {
+
+  .content-container{
+
+    font-size: 1.8em;
+
+    margin: 0 auto;
+
+    @media (max-width: 600px) {
+      margin-top: 2.4rem;
+    }
+
+    @media (min-width: 600px) and (min-height: 600px) {
+      max-width: 800px;
+      margin: 100px auto 5px;
+    }
+  }
+
+
+}
+
+a.body-link {
+  color: $primaryText
+}

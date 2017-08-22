@@ -1,0 +1,94 @@
+@import "../helpers/variables";
+
+#cardContainer {
+  min-height: 520px;
+}
+
+#expertiseCards {
+  position: relative;
+  margin:  5px -10px;
+}
+
+@media (min-width: 1000px ) and (min-height: 600px) {
+  #expertiseCards{
+    max-width: 800px;
+    margin: 100px auto 5px;
+  }
+}
+
+.exp-tile {
+  font-size: 1em;
+  cursor: pointer;
+  //height: 200px;
+  padding: 5px;
+  //border: 1px solid red;
+
+  @media #{$phone-query} {
+    height: 140px;
+    font-size: 1.4em;
+
+    .exp-icon {
+
+      font-size: 1.6em;
+
+    }
+
+  }
+
+  .exp-tile-background {
+    background-color: $primaryBg;
+    height: 100%;
+    padding: 1.5rem 0;
+    cursor: pointer;
+    //border: 1px solid blue;
+  }
+
+  .exp-tile-content {
+    position: relative;
+/*    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);*/
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+
+  .exp-icon {
+    max-width: 2.2em;
+    max-height: 2.2em;
+    left: 50%;
+    transform: translateX(-50%);
+    position: relative;
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    display: inline-block;
+  }
+
+
+  .cls-1 {
+    fill: $highLight;
+    fill-rule: evenodd;
+  }
+
+  .cls-2 {
+    fill: $primaryText;
+    fill-rule: evenodd;
+  }
+
+  h2 {
+    position: relative;
+    //top: 50%;
+    //transform: translateY(10%);
+    text-align: center;
+    font-size: 1.4em;
+    padding: 0;
+    margin: .4em 0 .6em 0;
+  }
+
+  @media (max-width: 400px) {
+    h2 {
+      font-size: 1em;
+    }
+  }
+}

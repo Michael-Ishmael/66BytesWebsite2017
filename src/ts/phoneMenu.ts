@@ -5,32 +5,41 @@ declare let Slideout:any;
 
 export class PhoneMenu {
 
-  private _slideout:any;
+    private _showing:boolean;
 
   init(){
 
-    this.initSlideout();
 
     $("#menuButton").click(e =>{
-      this._slideout.toggle();
+      this.toggleMenu();
       $(e.currentTarget).toggleClass("change")
     });
 
-    $("#phoneMenu a").click(e =>{
-      this._slideout.close();
+    $("#phoneMenu").find("a").click(e =>{
+      this.hideMenu();
       $("#menuButton").toggleClass("change");
     });
 
   }
 
-  private initSlideout(){
-    this._slideout = new Slideout({
-      'panel': document.getElementById('panel'),
-      'menu': document.getElementById('phoneMenu'),
-      'padding': 200,
-      'tolerance': 70,
-      'side': 'right'
-    });
+  private toggleMenu(){
+      if(this._showing) {
+          this.hideMenu();
+          return
+      }
+      this.showMenu();
+  }
+
+  private showMenu(){
+      $("section").addClass("slide-for-menu");
+      $("nav.narrow").addClass("show");
+      this._showing = true;
+  }
+
+  private hideMenu(){
+      $("section").removeClass("slide-for-menu");
+      $("nav.narrow").removeClass("show");
+      this._showing = false;
   }
 
 }

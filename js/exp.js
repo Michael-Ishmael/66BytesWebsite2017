@@ -77,7 +77,7 @@ $('#trigger1').click(function(){
 
 });
 
-var cardAnim = new CardAnimator();
+var cardAnim = new TileAnimator();
 cardAnim.init();
 
 

@@ -1,0 +1,74 @@
+
+#about {
+
+
+  article {
+
+    @media (min-height: 600px) and (min-width: 1000px) {
+
+      margin: 60px auto 5px;
+      border: 1px solid white;
+      padding: 1.4em;
+    }
+
+    @media (max-height: 640px)  {
+
+      margin: 0 -8px;
+      padding: 0.8em;
+    }
+
+    padding: 1em;
+    border-radius: 10px;
+    background-color: $cogFill;
+    color: darken($primaryBg, 10%);;
+    margin: 0 auto;
+    max-width: 50rem;
+    overflow-y: scroll;
+    position: relative;
+    font-size: 1.2em;
+    line-height: 1.4;
+    letter-spacing: .02em;
+
+
+    p {
+
+    }
+  }
+
+  .about-nav {
+    max-width: 6.2em;
+    margin: 0 auto;
+
+    .nav-link {
+      background-repeat: no-repeat;
+      background-size: contain;
+      width: 2.6em;
+      height: 2.6em;
+      padding: 0;
+      margin: 0;
+
+      &.active {
+        background-color: inherit;
+      }
+
+      &.company {
+        background-image: url('../img/about-company.png');
+
+        &.active {
+          background-image: url('../img/about-company-selected.png');
+        }
+      }
+
+      &.team {
+        background-image: url('../img/about-team.png');
+
+        &.active {
+          background-image: url('../img/about-team-selected.png');
+        }
+      }
+
+    }
+
+  }
+
+}

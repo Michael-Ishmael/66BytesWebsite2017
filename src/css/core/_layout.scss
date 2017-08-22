@@ -1,0 +1,96 @@
+@import "../helpers/variables";
+
+h1 {
+  font-size: 3em;
+  font-family: Lato, "Helvetica Neue", sans-serif;
+  font-weight: 200;
+  color: $primaryText;
+  text-transform: uppercase;
+  //background-color: lighten($primaryBg, 5%);
+  padding: .2em .3em .3em 0;
+  margin-left: -15px;
+  margin-right: -15px;
+  border-top: 4px solid #868484;
+
+  a {
+    display: inline-block;
+  }
+
+  @media (min-width: 540px) {
+    border-bottom-left-radius: .3em;
+    border-bottom-right-radius: .3em;
+  }
+
+  @media (max-width: 540px) {
+    padding-left: .3em;
+  }
+}
+
+h2 {
+  //text-transform: lowercase;
+  //text-align: center;
+  font-size: 2.4em;
+  font-family: Lato, "Helvetica Neue", sans-serif;
+  font-weight: 300;
+  color: $highLight;
+  margin-bottom: .6em;
+}
+
+section {
+
+  position: relative;
+  min-height: 600px;
+
+  &#expertise {
+    background-color: darken($primaryBg, 5%);
+  }
+
+  &#about {
+    background-color: lighten($primaryBg, 10%);
+    h1 {
+      color: #fff; // lighten($primaryText, 10%);
+    }
+  }
+
+  &#clients {
+    background-color: $primaryBg; //darken($primaryBg, 5%);
+  }
+
+  &#contact {
+    background-color: $secondaryBg;
+  }
+
+  //&#expertise h1 { background-color: darken($primaryBg, 5%); }
+
+  height: 100%;
+  padding-top: 44px;
+  font-size: 1rem;
+
+  article {
+
+    padding: 1em;
+    border-radius: 10px;
+    margin: 0 auto;
+    max-width: 50rem;
+    overflow-y: scroll;
+    position: relative;
+    font-size: 1.2em;
+    line-height: 1.4;
+    letter-spacing: .02em;
+    border: 1px solid white;
+
+    p {
+
+    }
+  }
+
+}
+
+@media (min-width: 1000px) and (min-height: 600px) {
+  #clients .content-container {
+    max-width: 800px;
+    margin: 100px auto 5px;
+  }
+}
+
+

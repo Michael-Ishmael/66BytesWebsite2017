@@ -1,0 +1,78 @@
+    private playAnim(): void {
+
+        //this.setBoxDims();
+
+
+        const margin = jQueryMargin, targetWidth = 60, targetHeight = 60;
+        let center = this._containerDims.center;
+        let targY = center.y - (this._boxHeight / 2) - jQueryMargin;
+        let totalWidth = (this._dupes.length * (targetWidth + margin)) - margin;
+        let startLeft = center.x - (totalWidth / 2);
+
+
+        let clickTarget: AnimTile;
+
+        this._dupes.forEach(dupe => {
+
+            dupe.targetLeft = startLeft + (dupe.positionIndex * (targetWidth + margin));
+            dupe.targetTop = targY;
+            if (dupe.chosenItem) clickTarget = dupe;
+        });
+
+        const that = this;
+        const tl = new TimelineLite({
+            onComplete: function () {
+                that._viewState = ExpertiseViewState.Carousel;
+
+            }
+        });
+
+        tl.add("start");
+        //targY = clickTarget.dims.top - 20;
+        //tl.to(clickTarget.el, .8, {top:"-=50", ease: Elastic.easeOut.config(2, 1)}, "start");
+        //tl.to(clickTarget.el.find('.exp-tile-content'), .8, {top:"-=20", ease: Elastic.easeOut.config(2, 1)}, "start");
+        tl.to(clickTarget.el.find('h2'), .5, {color: "#c7202a"}, "start");
+        tl.to(clickTarget.el.find('.cls-1'), .5, {className: "cls-2"}, "start");
+        tl.to($(tileClassName).find(tileClassName + "-background"), .3, {backgroundColor: "rgba(61, 69, 71, 0)"}, "-=.2");
+        tl.add("move", "-=0.1");
+
+        this._dupes.forEach(dupe => {
+            //tl.to(clickTarget.el.find('.exp-tile-content'), .8, {top:"50%"}, "move");
+            tl.to(dupe.el, .5, {
+                left: dupe.targetLeft,
+                top: dupe.targetTop,
+                width: targetWidth,
+                height: targetHeight,
+
+            }, "move");
+            //tl.to(dupe.el, .6, {backgroundColor: "rgba(61, 69, 71, 0)"}, "move");
+            // tl.to(dupe.el.find('.exp-icon'), .5, {yPercent: 80}, "move");
+            tl.to(dupe.el.find('h2'), .3, {opacity: 0, fontSize: ".02rem"}, "move");
+        });
+
+        tl.add("drop");
+        //tl.to($(tileClassName), .4, {top: "+=100", ease: Back.easeIn.config(1)}, "drop");
+        tl.call(function () {
+            that._dupes.forEach(dupe => {
+                let pos = dupe.el.position();
+                let elHeight = dupe.el.height();
+
+                let parentHeight = dupe.el.parent()[0].offsetHeight;
+                dupe.el.css("bottom", parentHeight - (pos.top + elHeight + (jQueryMargin * 2))); //elHeight)); // dupe.el.height()));
+                dupe.el.css("top", "");
+            });
+        });
+        tl.to($(tileClassName), 1, {bottom: "0", ease: Bounce.easeOut});
+        tl.add("carousel", "-=0.3");
+        tl.to(clickTarget.el.find('.exp-tile-content'), .3, {top: "-=10"});
+
+        tl.to(this._jCarousel, 1, {autoAlpha: 1, display: 'block'}, "carousel");
+        if (clickTarget) {
+            this._currentIndex = clickTarget.positionIndex;
+            this.changeIndex(clickTarget.positionIndex);
+        }
+
+        this._viewState = ExpertiseViewState.Transitioning;
+
+        tl.play()
+    }

@@ -1,8 +1,8 @@
 import {Elastic, TweenLite, TimelineLite, Back, Bounce} from "gsap";
 
 const jQueryMargin: number = 5;
-const tileClassName: string = ".exp-tile";
-const tileContainer = "#expertise";
+const tileClassName: string = "#expertiseCards > .exp-tile";
+const tileContainer = "#cardContainer";
 
 enum ExpertiseViewState {
     Tiles,
@@ -10,188 +10,403 @@ enum ExpertiseViewState {
     Transitioning
 }
 
-export class CardAnimator {
+enum Orientation {
+    Landscape,
+    Portrait
+}
 
-    private _dupes: AnimTile[] = [];
-    private _originals: JQuery[] = [];
-    private _containerDims: BoxDims;
+class TileElementSelector {
+    static ExpertiseSectionContainer = "section#expertise";
+    static SectionHeader = "";
+    static TileContainer = "#expertiseCards";
+    static OriginalTiles = "#expertiseCards > .exp-tile";
+    static DupeTileClass = "";
+    static CarouselIconBox = "carouselIconBox";  //Don't need hash for this one
+    static CarouselContainer = "#carouselContainer";
+    static Carousel = "#expertiseCarousel";
+}
+
+class TileMeasurements {
+
+    margin:number = 10;
+    maxAllowedCarouselAreaHeight:number = 620;
+    landscape: boolean;
+    widthOfAvailableSpace: number;
+    heightOfAvailableSpace: number;
+    tileContainerTop:number;
+
+    get targetIconWidth(): number{
+        return Math.min(60, Math.floor((document.body.clientWidth - (this.margin * 2)) / 6));
+
+        //return Math.min(Math.max(Math.floor(this.maxDimensionLength / 12), 30), 60);
+    }
+    get targetIconHeight(): number{
+        return Math.min(60, Math.floor((document.body.clientWidth - (this.margin * 2)) / 6));
+    }
+    get maxDimensionLength():number {
+        if(this.heightOfAvailableSpace > this.widthOfAvailableSpace)
+            return this.heightOfAvailableSpace;
+        return this.widthOfAvailableSpace;
+    }
+    totalIconSetLength: number;
+    tilesCenterX: number;
+    tilesCenterY: number;
+    iconContainerLeft:number;
+    iconContainerTop:number;
+    iconContainerOffsetLeft:number;
+    iconContainerOffsetTop:number;
+    interimIconPositionStartLeft:number;
+    interimIconPositionStartTop:number;
+    carouselAreaTop: number;
+
+    get carouselContainerLeft():number{
+        return this.landscape ?  this.margin : this.targetIconWidth;
+    }
+
+/*
+    get carouselContainerTop():number{
+        return this.margin; // this.landscape ? this.widthOfAvailableSpace: this.widthOfAvailableSpace - (this.targetIconWidth) ;
+    }
+*/
+
+    get carouselContainerRight():number{
+        return this.margin; // this.landscape ? this.widthOfAvailableSpace: this.widthOfAvailableSpace - (this.targetIconWidth) ;
+    }
+
+    get carouselContainerBottom():number{
+        let v = this.landscape ? this.targetCarouselAreaBottom + (this.targetIconHeight + this.margin)  : this.targetCarouselAreaBottom ;
+        return v;
+    }
+
+    get targetCarouselAreaBottom(): number{
+        return this.heightOfAvailableSpace - (Math.min(this.heightOfAvailableSpace, this.maxAllowedCarouselAreaHeight) - this.margin)
+    }
+
+}
+
+export class TileAnimator {
+
+    private _animatedTiles: AnimTile[] = [];
+    private _jSectionContainer: JQuery;
+    private _jTileContainer: JQuery;
+    private _jOriginals: JQuery;
+    private _jCarouselContainer: JQuery;
+    private _jCarousel: any;
     private _boxHeight: number = -1;
     private _boxWidth: number = -1;
     private _viewState: ExpertiseViewState = ExpertiseViewState.Tiles;
-    private _jCarousel: any;
+
     private _currentIndex: number = -1;
+    private _timeline:TimelineLite;
 
     constructor() {
 
     }
 
     init() {
-        this._jCarousel = $("#expertiseCarousel");
-        this._jCarousel.on("slide.bs.carousel", e => { this.handleCarouselSlide(e)});
+        this.initJElements();
+        this._jCarousel.on("slide.bs.carousel", e => {
+            this.handleCarouselSlide(e)
+        });
 
-        $(tileClassName).click( e => {
+        $(tileClassName).click(e => {
             this.handleTileClick(e);
         })
 
     }
 
+
     handleTileClick(e) {
 
         if (this._viewState == ExpertiseViewState.Tiles) {
             this.createDupes(e.currentTarget);
-            this.playAnim();
             return;
         }
 
     }
 
-    handleIconClick(icon:AnimTile){
+    handleIconClick(icon: AnimTile) {
         if (this._viewState == ExpertiseViewState.Carousel) {
             this.changeIndex(icon.positionIndex);
         }
     }
 
-    private createDupes(item: any) {
-
-        let that = this;
-        let targ: JQuery = null;
-
-
-        let contOffset = $(tileContainer).offset();
-
-
-        $(tileClassName).each(function (index) {
-
-            let el = $(this);
-            let offset = el.offset();
-            let dupe = el.clone();
-            let targetLeft = offset.left - contOffset.left;
-            let targetTop = offset.top - contOffset.top;
-            let targetwidth=  el.width() + (jQueryMargin * 2);
-            let targetHeight=  el.height() + (jQueryMargin * 2);
-            dupe.css({
-                position: 'absolute',
-                left: targetLeft,
-                top: targetTop,
-                width: targetwidth,
-                height: targetHeight,
-                zIndex: 50,
-                //background: "blue"
-            });
-            dupe.attr("class", "exp-tile");
-            $(tileContainer).append(dupe);
-            const tile = new AnimTile(dupe, that);
-            tile.chosenItem = this === item;
-            that._dupes.push(tile);
-            that._originals.push(el);
-            setTimeout(function () {
-                //el.css({background: "red"});
-                el.hide();
-            }, 10);
-        });
+    private initJElements(): void {
+        this._jSectionContainer = $(TileElementSelector.ExpertiseSectionContainer);
+        this._jTileContainer = $(TileElementSelector.TileContainer);
+        this._jOriginals = $(TileElementSelector.OriginalTiles);
+        this._jCarouselContainer = $(TileElementSelector.CarouselContainer);
+        this._jCarousel = $(TileElementSelector.Carousel);
     }
 
-    private playAnim(): void {
+    private createDupes(item: any) {
 
-        this.setBoxDims();
+        let m = this.calculateInitialMeasurements();
 
+        // -- control box --
+        let controlBox = this.addIconControlContainer(m);
 
-        const margin = jQueryMargin, targetWidth = 60, targetHeight = 60;
-        let center = this._containerDims.center();
-        let targY = center.y - (this._boxHeight / 2) - jQueryMargin;
-        let totalWidth = (this._dupes.length * (targetWidth + margin)) - margin;
-        let startLeft = center.x - (totalWidth / 2);
+        // -- interim position --
+        //this.showGuideBox(controlBox, m);
 
-        let controlBox = $("<div class='carou-controls'></div>");
-        $(tileContainer).append(controlBox);
-        controlBox.css({
-          margin: "auto",
-          position: "absolute",
-          bottom: 0,
-          height: targetHeight,
-          width: targetWidth,
-          backgroundColor: "red"
-        });
+        // -- start tiles --
+        this.makeDupes(m, controlBox, item);
+
+        this.setPositions(m.landscape);
 
         let clickTarget: AnimTile;
 
-        this._dupes.forEach(dupe => {
+        this._animatedTiles.forEach(dupe => {
 
-            dupe.targetLeft = startLeft + (dupe.positionIndex * (targetWidth + margin));
-            dupe.targetTop = targY;
+            dupe.targetLeft = m.landscape ? m.interimIconPositionStartLeft + (dupe.positionIndex * m.targetIconWidth) : m.interimIconPositionStartLeft;
+            dupe.targetTop = m.landscape ? m.interimIconPositionStartTop : m.interimIconPositionStartTop + (dupe.positionIndex * m.targetIconHeight);
             if (dupe.chosenItem) clickTarget = dupe;
         });
 
-        const that = this;
-        const tl = new TimelineLite({ onComplete: function(){
-            that._viewState = ExpertiseViewState.Carousel;
+        this.positionCarouselContainer(m);
 
-        }});
+        this.createTimeline(m, clickTarget);
+        this._timeline.play();
+    }
 
+    private showGuideBox(controlBox: JQuery, m: TileMeasurements) {
+        let positionBox = TileAnimator.createJElement("div", "testInterimPositionBox", null, controlBox)
+        positionBox.css({
+            position: "absolute",
+            top: m.interimIconPositionStartTop,
+            left: m.interimIconPositionStartLeft,
+            width: m.landscape ? m.totalIconSetLength : m.targetIconWidth,
+            height: m.landscape ? m.targetIconHeight : m.totalIconSetLength,
+            backgroundColor: "blue",
+            zIndex: 10,
+            opacity: .5
+        });
+    }
+
+    private createTimeline(m:TileMeasurements, clickTarget:AnimTile):void {
+
+        let that = this;
+        const tl = new TimelineLite({
+            onComplete: function () {
+                that._viewState = ExpertiseViewState.Carousel;
+
+            }
+        });
         tl.add("start");
-        //targY = clickTarget.dims.top - 20;
-        //tl.to(clickTarget.el, .8, {top:"-=50", ease: Elastic.easeOut.config(2, 1)}, "start");
-        //tl.to(clickTarget.el.find('.exp-tile-content'), .8, {top:"-=20", ease: Elastic.easeOut.config(2, 1)}, "start");
-        tl.to(clickTarget.el.find('h2'), .5, {color: "#c7202a"}, "start");
-        tl.to(clickTarget.el.find('.cls-1'), .5, {className: "cls-2"}, "start");
-        tl.to($(tileClassName).find(tileClassName + "-background"), .3, {backgroundColor: "rgba(61, 69, 71, 0)"}, "-=.2");
-        tl.add("move", "-=0.1");
 
-        this._dupes.forEach(dupe => {
-            //tl.to(clickTarget.el.find('.exp-tile-content'), .8, {top:"50%"}, "move");
+        let tiles = $('.exp-tile-icon');
+        if(clickTarget){
+            tl.to(clickTarget.el.find('h2'), .5, {color: "#c7202a"}, "start");
+            tl.to(clickTarget.el.find('.cls-1'), .5, {className: "cls-2"}, "start");
+        }
+        tl.to(tiles.find(".exp-tile-background"), .3, {backgroundColor: "rgba(61, 69, 71, 0)"}, "-=.2");
+        tl.add("move", "-=0.1");
+        this._animatedTiles.forEach(dupe => {
             tl.to(dupe.el, .5, {
                 left: dupe.targetLeft,
                 top: dupe.targetTop,
-                width: targetWidth,
-                height: targetHeight,
+                width: m.targetIconWidth,
+                height: m.targetIconHeight,
 
             }, "move");
-            //tl.to(dupe.el, .6, {backgroundColor: "rgba(61, 69, 71, 0)"}, "move");
-            // tl.to(dupe.el.find('.exp-icon'), .5, {yPercent: 80}, "move");
             tl.to(dupe.el.find('h2'), .3, {opacity: 0, fontSize: ".02rem"}, "move");
         });
 
         tl.add("drop");
-        //tl.to($(tileClassName), .4, {top: "+=100", ease: Back.easeIn.config(1)}, "drop");
-      tl.call(function () {
-        that._dupes.forEach(dupe => {
-          let pos = dupe.el.position();
-          let elHeight = dupe.el.height();
+        //let halfDistance = landscape ? startTop / 2 : startLeft / 2;
 
-          let parentHeight =  dupe.el.parent()[0].offsetHeight;
-          dupe.el.css("bottom", parentHeight - (pos.top + elHeight + (jQueryMargin * 2))); //elHeight)); // dupe.el.height()));
-          dupe.el.css("top", "");
-        });
-      });
-      tl.to($(tileClassName), 1, {bottom: "0", ease: Bounce.easeOut });
+        if (m.landscape) {
+            //tl.staggerTo(tiles, .4, {"top": "-=" + halfDistance.toString(), ease: Back.easeIn.config(1)}, 0.1,"drop");
+            tl.staggerTo(tiles, .6, {"top": "0", ease: Bounce.easeOut}, 0.04, "drop");
+        } else {
+            //   tl.to(tiles, .4, {"left": "-=" + halfDistance.toString(), ease: Back.easeIn.config(1)}, "drop");
+            tl.staggerTo(tiles, .6, {"left": "0", ease: Bounce.easeOut}, 0.04, "drop");
+        }
         tl.add("carousel", "-=0.3");
-        tl.to(clickTarget.el.find('.exp-tile-content'), .3, {top: "-=10"});
+        if(clickTarget){
+            if (m.landscape) {
+                tl.to(clickTarget.el.find('.exp-tile-content'), .3, {top: "-=10"});
+            } else {
+                tl.to(clickTarget.el.find('.exp-tile-content'), .3, {left: "+=10"});
+            }
+        }
 
-        tl.to(this._jCarousel, 1, {autoAlpha: 1, display: 'block'}, "carousel");
-        if(clickTarget) {
+        tl.to(this._jCarouselContainer, 1, {autoAlpha: 1, display: 'block'}, "carousel");
+        if (clickTarget) {
             this._currentIndex = clickTarget.positionIndex;
             this.changeIndex(clickTarget.positionIndex);
         }
 
         this._viewState = ExpertiseViewState.Transitioning;
 
-        tl.play()
+        this._timeline = tl;
     }
 
-    private changeIndex(newIndex:number){
-
-        this._jCarousel.carousel(newIndex);
+    private makeDupes(m: TileMeasurements, controlBox: JQuery, item: any) {
+        let that = this;
+        this._jOriginals.each(function () {
+            that.createAnimatedTile(m, $(this), controlBox, item === this);
+        });
+        setTimeout(function () {
+            that._jTileContainer.hide();
+        }, 10);
+        return that;
     }
 
-    private handleCarouselSlide(e){
-        if(e && e.to){
-            if(this._currentIndex != e.to){
-                this._dupes.forEach(dupe => {
-                    if(dupe.positionIndex == this._currentIndex){
+    private createAnimatedTile(m:TileMeasurements, original:JQuery, newParent:JQuery, isSelectedTile:boolean){
+
+        let offset = original.offset();
+        let dupe = original.clone(); //$("<div class='tiley' style='padding: 5px'><div style='height: 100%; background-color: green'></div></div>"); //
+        let dupeLeft = offset.left - m.iconContainerOffsetLeft;
+        let dupeTop = offset.top - m.iconContainerOffsetTop;
+        let dupeWidth = original.outerWidth();
+        let dupeHeight = original.outerHeight();
+        dupe.css({
+            position: 'absolute',
+            left: dupeLeft,
+            top: dupeTop,
+            width: dupeWidth,
+            height: dupeHeight,
+            zIndex: 50,
+        });
+        dupe.attr("class", "exp-tile exp-tile-icon");
+        newParent.append(dupe);
+
+        const tile = new AnimTile(dupe, this);
+        tile.chosenItem = isSelectedTile;
+        this._animatedTiles.push(tile);
+    }
+
+    private addIconControlContainer(m:TileMeasurements, showGuide:boolean = false):JQuery{
+
+        // -- control box --
+        let controlBox = TileAnimator.createJElement("div", TileElementSelector.CarouselIconBox, null, this._jSectionContainer);
+
+        controlBox.css({
+            position: "absolute",
+            width: m.landscape ? m.totalIconSetLength : m.targetIconWidth,
+            height: m.landscape ? m.targetIconHeight : m.totalIconSetLength,
+            zIndex: 100,
+        });
+
+        if(showGuide){
+            controlBox.css("backgroundColor", "red")
+        }
+
+        if (m.landscape) {
+            controlBox.css({
+                bottom: m.targetCarouselAreaBottom,
+                left: "50%",
+                marginLeft: m.totalIconSetLength / 2 * -1,
+            });
+        } else {
+            controlBox.css({
+                top: m.tileContainerTop,
+                left: 0,
+            });
+        }
+
+        let controlBoxPosition = controlBox.position();
+        m.iconContainerLeft = controlBoxPosition.left;
+        m.iconContainerTop = controlBoxPosition.top;
+
+        let controlBoxOffset = controlBox.offset();
+        m.iconContainerOffsetLeft = controlBoxOffset.left;
+        m.iconContainerOffsetTop = controlBoxOffset.top;
+
+        m.interimIconPositionStartLeft = m.landscape ? 0 : (m.tilesCenterX - ( m.targetIconWidth / 2) ) - m.iconContainerLeft;
+        m.interimIconPositionStartTop = m.landscape ? (m.tilesCenterY - ( m.targetIconHeight / 2)) - m.iconContainerTop : 0;
+
+        return controlBox;
+    }
+
+    private positionCarouselContainer(m:TileMeasurements){
+
+        this._jCarouselContainer.css({
+            top: m.carouselAreaTop,
+            left: m.carouselContainerLeft,
+            right: m.carouselContainerRight,
+            bottom: m.carouselContainerBottom
+        });
+
+
+    }
+
+    private calculateInitialMeasurements():TileMeasurements{
+
+        let tileBoxDims = this.calculateIconContainer();
+
+        let m = new TileMeasurements();
+        m.carouselAreaTop = this._jTileContainer.position().top + m.margin;
+        m.heightOfAvailableSpace = this._jSectionContainer.innerHeight() - m.carouselAreaTop;
+        m.widthOfAvailableSpace = this._jSectionContainer.width();
+        m.landscape = true; //tileBoxDims.orientation == Orientation.Landscape;
+        m.totalIconSetLength = this._jOriginals.length * (m.landscape ? m.targetIconWidth : m.targetIconHeight);
+        m.tilesCenterX = tileBoxDims.center.x;
+        m.tilesCenterY = tileBoxDims.center.y;
+        m.tileContainerTop = tileBoxDims.top;
+
+        return m;
+
+    }
+
+    private static createJElement(type:string, id:string = null, cssClass:string = null, parent:JQuery = null):JQuery{
+
+        let htmlString = `<${type}`;
+        if(id) htmlString += ` id="${id}"`;
+        if(cssClass) htmlString += ` class="${cssClass}"`;
+        htmlString += `></${type}>`;
+
+        let jEl = $(htmlString);
+        if(parent) parent.append(jEl);
+
+        return jEl;
+
+    }
+
+    private calculateIconContainer(): BoxDims {
+
+        let contOffset = this._jSectionContainer.offset();
+        let x1 = 0, x2 = 0, y1 = 0, y2 = 0;
+        let that = this;
+        this._jOriginals.each(function (index) {
+
+            let el = $(this);
+            let offset = el.offset();
+
+            let tileLeft = offset.left - contOffset.left;
+            let tileTop = offset.top - contOffset.top;
+            let tileWidth = el.outerWidth(true);
+            let tileHeight = el.outerHeight(true);
+            let tileRight = tileLeft + tileWidth;
+            let tileBottom = tileTop + tileHeight;
+
+            if (tileLeft < x1 || x1 === 0) x1 = tileLeft;
+            if (tileTop < x1 || y1 === 0) y1 = tileTop;
+            if (tileRight > x2 || x1 === 0) x2 = tileRight;
+            if (tileBottom > y2 || x1 === 0) y2 = tileBottom;
+            if (tileWidth > that._boxWidth) that._boxWidth = tileWidth;
+            if (tileHeight > that._boxHeight) that._boxHeight = tileHeight;
+        });
+
+        return new BoxDims(x1, y1, x2 - x1, y2 - y1);
+
+    }
+
+    private changeIndex(newIndex: number) {
+        if(this._jCarousel && this._jCarousel.carousel)
+            this._jCarousel.carousel(newIndex);
+    }
+
+    private handleCarouselSlide(e) {
+        if (e && (e.to || e.to === 0)) {
+            if (this._currentIndex != e.to) {
+                this._animatedTiles.forEach(dupe => {
+                    if (dupe.positionIndex == this._currentIndex) {
                         TweenLite.to(dupe.el.find('.exp-tile-content'), .3, {top: "+=10"});
                         TweenLite.to(dupe.el.find('.cls-2'), .5, {className: "cls-1"});
                     }
-                    if(dupe.positionIndex == e.to){
+                    if (dupe.positionIndex == e.to) {
                         TweenLite.to(dupe.el.find('.exp-tile-content'), .3, {top: "-=10"});
                         TweenLite.to(dupe.el.find('.cls-1'), .5, {className: "cls-2"});
                     }
@@ -201,27 +416,30 @@ export class CardAnimator {
         }
     }
 
-    private setBoxDims(): void {
 
-        let x1 = 0, x2 = 0, y1 = 0, y2 = 0;
+    private setPositions(landscape:boolean): void {
+        let seedValue = -10000;
+        let x1 = seedValue, x2 = seedValue, y1 = seedValue, y2 = seedValue, tileWidth = seedValue, tileHeight = seedValue;
 
-        this._dupes.forEach(dup => {
-            if (dup.dims.left < x1 || x1 === 0) x1 = dup.dims.left;
-            if (dup.dims.top < x1 || y1 === 0) y1 = dup.dims.top;
-            if (dup.dims.right > x2 || x1 === 0) x2 = dup.dims.right;
-            if (dup.dims.bottom > y2 || x1 === 0) y2 = dup.dims.bottom;
-            if (dup.dims.width > this._boxWidth) this._boxWidth = dup.dims.width;
-            if (dup.dims.height > this._boxHeight) this._boxHeight = dup.dims.height;
+        this._animatedTiles.forEach(dup => {
+            if (dup.dims.left < x1 || x1 === seedValue) x1 = dup.dims.left;
+            if (dup.dims.top < y1 || y1 === seedValue) y1 = dup.dims.top;
+            if (dup.dims.right > x2 || x2 === seedValue) x2 = dup.dims.right;
+            if (dup.dims.bottom > y2 || y2 === seedValue) y2 = dup.dims.bottom;
+            if (dup.dims.width > tileWidth) tileWidth = dup.dims.width;
+            if (dup.dims.height > tileHeight) tileHeight = dup.dims.height;
         });
 
-        this._containerDims = new BoxDims(x1, y1, x2 - x1, y2 - y1);
+        let boxDims = new BoxDims(x1, y1, x2 - x1, y2 - y1);
         let rowCount = 0;
         let colCount = 0;
 
 
-        this._dupes.forEach(dup => {
-            dup.col = Math.floor(((dup.dims.left - this._containerDims.left) / this._boxWidth) + 1);
-            dup.row = Math.floor(((dup.dims.top - this._containerDims.top) / this._boxHeight) + 1);
+
+
+        this._animatedTiles.forEach(dup => {
+            dup.col = Math.round(((dup.dims.left - boxDims.left) / tileWidth) + 1);
+            dup.row = Math.round(((dup.dims.top - boxDims.top) / tileHeight) + 1);
 
             if (dup.col > colCount) colCount = dup.col;
             if (dup.row > rowCount) rowCount = dup.row;
@@ -229,12 +447,20 @@ export class CardAnimator {
 
         let positionIndex = 0;
 
-        for (let c = 1; c <= colCount; c++) {
-            for (let r = 1; r <= rowCount; r++) {
+        //let landscape = rowCount >= colCount;
 
-                let tile = this._dupes.find(d => d.row === r && d.col === c);
+        let outerCount = landscape ? colCount : rowCount;
+        let innerCount = landscape ? rowCount : colCount;
+
+        for (let o = 1; o <= outerCount; o++) {
+            for (let i = 1; i <= innerCount; i++) {
+
+                let r = landscape ? i : o;
+                let c = landscape ? o : i;
+
+                let tile = this._animatedTiles.find(d => d.row === r && d.col === c);
                 if (tile) {
-                    tile.positionIndex = positionIndex;
+                    //tile.positionIndex = positionIndex;
                     positionIndex++;
                 }
             }
@@ -257,7 +483,7 @@ class AnimTile {
     public targetTop: number;
 
 
-    constructor(public el: JQuery, public animator:CardAnimator) {
+    constructor(public el: JQuery, public animator: TileAnimator) {
         this.initFromEl();
     }
 
@@ -265,18 +491,21 @@ class AnimTile {
         return this._positionIndex;
     }
 
-    set positionIndex(value:number){
+    set positionIndex(value: number) {
         this._positionIndex = value;
         this.el.data("index", value);
-        this.el.click(e => { this.handleClick();})
+        this.el.click(e => {
+            this.handleClick();
+        })
     }
 
     private initFromEl() {
-        const off = this.el.offset();
-        this.dims = new BoxDims(off.left, off.top, this.el.width(), this.el.height());
+        const off = this.el.position();
+        this.dims = new BoxDims(off.left, off.top, this.el.outerWidth(), this.el.outerHeight());
+        this.positionIndex = parseInt(this.el.data("index")) - 1;
     }
 
-    private handleClick():void {
+    private handleClick(): void {
         this.animator.handleIconClick(this);
     }
 }
@@ -301,13 +530,19 @@ class BoxDims {
     }
 
 
-    center(): Point {
+    public get center(): Point {
 
         return {
             x: this.left + (this.width / 2),
             y: this.top + (this.height / 2)
         };
 
+    }
+
+    public get orientation(): Orientation {
+        if (this.width >= this.height)
+            return Orientation.Landscape;
+        return Orientation.Portrait
     }
 
 

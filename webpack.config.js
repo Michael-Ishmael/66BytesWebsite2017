@@ -1,5 +1,5 @@
 const path = require('path');
-const webPack = require("webpack");
+const webpack= require("webpack");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 const ExtraneousFileCleanupPlugin = require('webpack-extraneous-file-cleanup-plugin');
@@ -9,7 +9,7 @@ let extractPlugin = new ExtractTextWebpackPlugin({
     allChunks: true
 });
 
-let bootstrapProvide = new webPack.ProvidePlugin({
+let bootstrapProvide = new webpack.ProvidePlugin({
     $: 'jquery',
     jQuery: 'jquery',
     'window.jQuery': 'jquery',
@@ -23,7 +23,7 @@ module.exports = {
     devtool: 'source-map',
     entry: {
         main: "./src/index.ts",
-        styles: "./src/css/expertise.scss"
+        styles: "./src/css/main.scss"
     },
     resolve: {
         extensions: [
@@ -52,7 +52,29 @@ module.exports = {
                 loaders: extractPlugin.extract(
                      {
                         fallback:"style-loader",
-                        use: ["css-loader", "sass-loader"]
+                         use: [
+                             {
+                                 loader: "css-loader"
+                             },
+                             {
+                                 loader: "postcss-loader",
+                                 options: {
+                                     plugins: function () { // post css plugins, can be exported to postcss.config.js
+                                         return [
+                                             require('precss'),
+                                             require('autoprefixer')
+                                         ];
+                                     },
+                                     sourceMap: true
+                                 }
+                             },
+                             {
+                                 loader: "resolve-url-loader"
+                             },
+                             {
+                                 loader: "sass-loader"
+                             }
+                         ]
                     }
                 ),
                 exclude: ["node_modules"]
@@ -74,7 +96,18 @@ module.exports = {
             },
             {
                 test: /\.ts$/,
-                loader: "awesome-typescript-loader",
+                use: [
+                    {
+                        loader: "babel-loader",
+                        options: {
+                            presets: ['es2015']
+                        }
+                    },
+                    {
+                        loader: "awesome-typescript-loader"
+                    }
+                ],
+
                 exclude: ["node_modules"]
             }
 
