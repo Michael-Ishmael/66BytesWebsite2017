@@ -49,13 +49,14 @@ body {
 
 header {
 
-  height: 44px;
+  min-height: 44px;
+  height: 2.4rem;
 
   .logo {
     margin-left: .3em;
     float: left;
-    width: 6em;
-    height: 1.8em;
+    height: 1.6rem;
+    width: 6rem;
     display: inline-block;
     background: url("../img/logo.png");
     background-repeat: no-repeat;
@@ -92,7 +93,6 @@ header {
       }
     }
   }
-
 
 }
 

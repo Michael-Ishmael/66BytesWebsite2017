@@ -11,7 +11,7 @@
       padding: 1.4em;
     }
 
-    @media (max-height: 640px)  {
+    @media (max-height: 640px) and (max-width: 500px) {
 
       margin: 0 -8px;
       padding: 0.8em;

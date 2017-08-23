@@ -2,7 +2,7 @@ import {TileAnimator } from "./ts/cardAnimator"
 import "bootstrap"
 import {PhoneMenu} from "./ts/phoneMenu";
 import { CogAnimator } from "./ts/cogAnimator"
-import { ScrollManager } from "./ts/scrollManager"
+import {ScrollManager} from "./ts/scrollManager"
 
 let anim = new TileAnimator();
 anim.init();

@@ -2,17 +2,21 @@
 
 #cardContainer {
   min-height: 520px;
+  background-color: darken($primaryBg, 5%);
+  height: 100%;
 }
 
 #expertiseCards {
   position: relative;
-  margin:  5px -10px;
+  margin:  10% -10px;
+
 }
 
 @media (min-width: 1000px ) and (min-height: 600px) {
   #expertiseCards{
     max-width: 800px;
-    margin: 100px auto 5px;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
@@ -23,8 +27,8 @@
   padding: 5px;
   //border: 1px solid red;
 
-  @media #{$phone-query} {
-    height: 140px;
+  @media #{$portrait-phone} {
+    min-height: 140px;
     font-size: 1.4em;
 
     .exp-icon {

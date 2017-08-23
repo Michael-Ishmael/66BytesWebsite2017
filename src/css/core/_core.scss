@@ -9,7 +9,7 @@ html, body {
   font-weight: 300;
   font-size: 20px;
   background-color: $primaryBg;
-  color: #fff;
+  color: #bfbfbf;
 
 }
 
@@ -69,4 +69,36 @@ a {
 
   }
 
+}
+
+.test-square {
+
+  margin: 100px auto;
+  background-color: lighten($secondaryBg, 20%);
+  height: 200px;
+  width: 200px;
+
+  div {
+    display: none;
+    background-color: white;
+    color: #1d1e1f;
+
+    @media #{$portrait-phone}{
+      &.portrait-phone{
+        display: block;
+      }
+    }
+
+    @media #{$landscape-phone}{
+      &.landscape-phone{
+        display: block;
+      }
+    }
+
+    @media #{$landscape-tablet}{
+      &.landscape-tablet{
+        display: block;
+      }
+    }
+  }
 }

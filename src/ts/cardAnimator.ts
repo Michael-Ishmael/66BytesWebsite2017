@@ -1,4 +1,5 @@
 import {Elastic, TweenLite, TimelineLite, Back, Bounce} from "gsap";
+import {ScreenSizeManager} from "./screenSizeManager";
 
 const jQueryMargin: number = 5;
 const tileClassName: string = "#expertiseCards > .exp-tile";
@@ -79,7 +80,8 @@ class TileMeasurements {
     }
 
     get targetCarouselAreaBottom(): number{
-        return this.heightOfAvailableSpace - (Math.min(this.heightOfAvailableSpace, this.maxAllowedCarouselAreaHeight) - this.margin)
+        let bottomPadding = ScreenSizeManager.IsSmallPortrait ? 44 : 0;
+        return this.heightOfAvailableSpace - (Math.min(this.heightOfAvailableSpace, this.maxAllowedCarouselAreaHeight) - this.margin - bottomPadding);
     }
 
 }
@@ -99,11 +101,14 @@ export class TileAnimator {
     private _currentIndex: number = -1;
     private _timeline:TimelineLite;
 
+    private _screenSizeManager:ScreenSizeManager;
+
     constructor() {
 
     }
 
     init() {
+        this._screenSizeManager = ScreenSizeManager.Instance;
         this.initJElements();
         this._jCarousel.on("slide.bs.carousel", e => {
             this.handleCarouselSlide(e)

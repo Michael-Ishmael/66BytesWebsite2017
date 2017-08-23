@@ -119,6 +119,11 @@ module.exports = {
             filename: "./index.html",
             hash: true
         }),
+        new HtmlWebpackPlugin({
+            template: "./src/test.html",
+            filename: "./test.html",
+            hash: true
+        }),
         extractPlugin,
         bootstrapProvide
 /*        new ExtraneousFileCleanupPlugin({

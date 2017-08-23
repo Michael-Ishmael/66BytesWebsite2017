@@ -20,7 +20,7 @@ export class ScrollManager {
 
             let scene = new ScrollMagic.Scene({
                 triggerElement: this // $("#" + id + " h1")[0]
-                , duration: '60%'
+                , duration: '100%'
             });
             if (id !== "home") {
                 scene.setPin(this);

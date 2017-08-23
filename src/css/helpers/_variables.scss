@@ -5,4 +5,16 @@ $primaryText: #c7202a;
 $highLight: #c4b61b;
 $secondaryHighLight: #b6ced4;
 
-$phone-query: "(max-width: 540px) and (min-height: 560px)";
+
+$portrait-phone: "(max-width: 420px) and (min-height: 540px)";
+$landscape-phone: "(min-width: 540px) and (max-width: 740px) and (max-height: 420px)";
+
+$landscape-tablet: "(min-width: 740px) and (max-width: 1026px) and (max-height: 800px)";
+$portrait-tablet: "(max-width: 500px) and (min-height: 580px)";
+$landscape-big-tablet: "(max-width: 500px) and (min-height: 580px)";
+$portrait-big-tablet: "(max-width: 500px) and (min-height: 580px)";
+$laptop: "(max-width: 500px) and (min-height: 580px)";
+$desktop: "(max-width: 500px) and (min-height: 580px)";
+$large-screen: "(max-width: 500px) and (min-height: 580px)";
+
+
